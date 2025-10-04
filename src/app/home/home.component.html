@@ -1,0 +1,48 @@
+<div class="container home-content">
+  <div>
+    <h5>Read and search the bible below:</h5>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <select class="form-select" (change)="onTranslationChange($event)">
+        <option [value]="" selected>-- Select a Translation --</option>
+        @if (translationsData().length > 0) {
+          @for (trans of translationsData(); track trans.id) {
+            <option [value]="trans.id">{{ trans.name }}</option>
+          }
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-6">
+      <select class="form-select" aria-label="Books" [disabled]="!selectedTranslation()" (change)="onBookChange($event)" [value]="selectedBook()">
+        <option selected>-- Select a Book --</option>
+        @if (booksData()) {
+          @for (book of booksData(); track $index) {
+            <option [value]="book.id">{{ book.name }}</option>
+          }
+        }
+      </select>
+    </div>
+    <div class="col-6">
+      <select class="form-select" aria-label="Chapters" [disabled]="!selectedBook()" (change)="onChapterChange($event)" [value]="selectedChapter()">
+        <option selected>-- Select a Chapter --</option>
+        @if (numberOfChapters()) {
+          @for (ch of numberOfChapters(); track $index) {
+            <option [value]="ch">{{ ch }}</option>
+          }
+        }
+      </select>
+    </div>
+  </div>
+  <div class="button-search row mt-3 mb-4">
+      <button class="btn btn-success" [disabled]="!selectedChapter()" (click)="onClickSearch()">Search</button>
+  </div>
+
+  @if(showSearchContent()) {
+    <app-search-content [chapterData]="chapterData()" ></app-search-content>
+  }
+
+</div>

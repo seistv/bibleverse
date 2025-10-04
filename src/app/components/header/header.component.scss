@@ -1,0 +1,83 @@
+header {
+    padding: 10px;
+    background: #02534d;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    width: 90px;
+    cursor: pointer;
+}
+
+.desktop-menu {
+    margin-top: 24px;
+}
+
+.desktop-menu ul {
+    padding: 0;
+    margin: 0;
+}
+
+.desktop-menu ul li {
+    list-style-type: none;
+    color: white;
+    display: inline-block;
+    font-size: 18px;
+    margin-left: 16px;
+}
+
+.desktop-menu ul li:hover {
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    color: yellow;
+    transition: 0.1s ease-in-out;
+}
+
+.logo-container {
+    width: 350px;
+}
+
+.logo-title {
+    margin-top: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media screen and (min-width: 128px) and (max-width: 900px) {
+    .desktop-menu {
+        position: fixed;
+        transition: 0.4s ease-in-out;
+        right: -280px;
+        top: 64px;
+        background: #02534d;
+        width: 280px;
+        height: 100%;
+    }
+
+    .desktop-menu ul li {
+        display: block;
+        text-align: left;
+        margin: 0;
+        padding: 10px 0 10px 26px;
+        border-bottom: 1px solid gray;
+    }
+    
+    .menu-icon {
+        display: block;
+        color: white;
+        font-size: 40px;
+        padding: 10px;
+    }
+
+    .mobile-menu {
+        right: 0;
+        transition: 0.4s ease-in-out;
+    }
+}
