@@ -11,10 +11,6 @@ header {
     cursor: pointer;
 }
 
-.desktop-menu {
-    margin-top: 24px;
-}
-
 .desktop-menu ul {
     padding: 0;
     margin: 0;
@@ -36,13 +32,7 @@ header {
     transition: 0.1s ease-in-out;
 }
 
-.logo-container {
-    width: 350px;
-}
-
 .logo-title {
-    margin-top: 5px;
-    display: inline-block;
     cursor: pointer;
 }
 
@@ -55,7 +45,7 @@ header {
         position: fixed;
         transition: 0.4s ease-in-out;
         right: -280px;
-        top: 64px;
+        top: 100px;
         background: #02534d;
         width: 280px;
         height: 100%;

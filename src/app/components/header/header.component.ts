@@ -11,6 +11,16 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   menuValue = signal(false);
   menuIcon = signal('bi bi-list');
+  isMobile = signal(false);
+
+  constructor() {
+    const mq = window.matchMedia('(max-width: 900px)');
+    this.isMobile.set(mq.matches);
+
+    mq.addEventListener('change', (e) => {
+      this.isMobile.set(e.matches);
+    });
+  }
 
   openMenu() {
     this.menuValue.update((v) => !v);
