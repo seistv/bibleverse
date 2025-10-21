@@ -2,3 +2,41 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Input Box Style */
+.mat-mdc-form-field {
+  --mdc-filled-text-field-active-indicator-color: #0da75f;
+}
+
+.custom-form-field .mdc-floating-label {
+  color: #757575 !important;
+}
+
+
+.custom-form-field.mat-focused .mdc-floating-label {
+  color: #0da75f !important;
+}
+
+.custom-form-field.mat-focused .mdc-line-ripple::after {
+  border-bottom-color: #53c4a2 !important;
+}
+
+/* Autocomplete Panel Style */
+.translation-autocomplete-panel .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: #bbeed3 !important;
+}
+
+.translation-autocomplete-panel .mat-mdc-option.mdc-list-item--selected {
+  background-color: #53c4a2 !important;
+}
+
+.translation-autocomplete-panel {
+  --mat-option-selected-state-label-text-color: #272829;
+  --mat-option-hover-state-layer-color: #bbeed3;
+  --mat-option-focus-state-layer-color: #bbeed3;
+}
+
+.translation-autocomplete-panel
+  .mat-pseudo-checkbox.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+  color: #02534d !important;
+}
