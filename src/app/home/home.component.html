@@ -1,48 +1,80 @@
-<div class="container home-content">
-  <div>
-    <h5>Read and search the bible below:</h5>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <select class="form-select" (change)="onTranslationChange($event)">
-        <option [value]="" selected>-- Select a Translation --</option>
-        @if (translationsData().length > 0) {
-          @for (trans of translationsData(); track trans.id) {
-            <option [value]="trans.id">{{ trans.name }}</option>
-          }
-        }
-      </select>
+<div class="container home-content" (click)="toggleExpand()">
+  <div class="search-content">
+    <div class="expand-header">
+      <h5 class="expand-title">
+        Bible Search here!
+        <span class="expand-icon">{{ isExpanded() ? '▲' : '▼' }}</span>
+      </h5>
     </div>
-  </div>
+    
+    @if (isExpanded()) {
+      <form [formGroup]="bibleForm" class="expand-content" (click)="$event.stopPropagation()">
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field class="custom-form-field w-100">
+              <mat-label>Translations</mat-label>
+              <input type="text" 
+                matInput formControlName="translation" 
+                [matAutocomplete]="autoTranslation"
+                placeholder="Select a translation"
+              >
+              <mat-autocomplete #autoTranslation="matAutocomplete" 
+                [displayWith]="displayTranslation"
+                (optionSelected)="onTranslationChange($event.option.value)" 
+                class="translation-autocomplete-panel"
+              >
+                @for (tr of filteredTranslationChoice(); track tr) {
+                  <mat-option [value]="tr.id">{{tr.name}}</mat-option>
+                }
+                @if (filteredTranslationChoice().length === 0) {
+                  <mat-option disabled>
+                    No results
+                  </mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
 
-  <div class="row mt-3">
-    <div class="col-6">
-      <select class="form-select" aria-label="Books" [disabled]="!selectedTranslation()" (change)="onBookChange($event)" [value]="selectedBook()">
-        <option selected>-- Select a Book --</option>
-        @if (booksData()) {
-          @for (book of booksData(); track $index) {
-            <option [value]="book.id">{{ book.name }}</option>
-          }
-        }
-      </select>
-    </div>
-    <div class="col-6">
-      <select class="form-select" aria-label="Chapters" [disabled]="!selectedBook()" (change)="onChapterChange($event)" [value]="selectedChapter()">
-        <option selected>-- Select a Chapter --</option>
-        @if (numberOfChapters()) {
-          @for (ch of numberOfChapters(); track $index) {
-            <option [value]="ch">{{ ch }}</option>
-          }
-        }
-      </select>
-    </div>
-  </div>
-  <div class="button-search row mt-3 mb-4">
-      <button class="btn btn-success" [disabled]="!selectedChapter()" (click)="onClickSearch()">Search</button>
-  </div>
+          <div class="col-6">
+            <mat-form-field class="custom-form-field w-100">
+              <mat-label>Books</mat-label>
+              <input type="text" 
+                matInput formControlName="book" 
+                [matAutocomplete]="autoBook"
+                placeholder="Select a book"
+              >
+              <mat-autocomplete #autoBook="matAutocomplete" 
+                [displayWith]="displayBook"
+                (optionSelected)="onBookChange($event.option.value)" 
+                class="translation-autocomplete-panel"
+              >
+                @for (bk of filteredBookChoice(); track bk) {
+                  <mat-option [value]="bk.id">{{bk.name}}</mat-option>
+                }
+                @if (filteredBookChoice().length === 0) {
+                  <mat-option disabled>
+                    No results
+                  </mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
 
+        <div class="chapter-container">
+          @if (numberOfChapters()) {
+            @for (ch of numberOfChapters(); track $index) {
+              <button class="chapter-btn" value="{{ ch }}" (click)="onClickSearch($event)">{{ ch }}</button>
+            }
+          }
+        </div>
+      </form>
+    }
+  </div>
+  
   @if(showSearchContent()) {
-    <app-search-content [chapterData]="chapterData()" ></app-search-content>
+    <div class="search-result my-4" (click)="$event.stopPropagation()">
+      <app-search-content [chapterData]="chapterData()"></app-search-content>
+    </div>
   }
-
 </div>
