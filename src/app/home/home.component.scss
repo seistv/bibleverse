@@ -49,6 +49,11 @@
   transform: scale(1.05);
 }
 
+.chapter-btn.active-chapter {
+  background-color: #00b3b3;
+  color: white;
+}
+
 .expand-header {
   display: flex;
   justify-content: space-between;
