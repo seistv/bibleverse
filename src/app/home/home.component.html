@@ -64,7 +64,13 @@
         <div class="chapter-container">
           @if (numberOfChapters()) {
             @for (ch of numberOfChapters(); track $index) {
-              <button class="chapter-btn" value="{{ ch }}" (click)="onClickSearch($event)">{{ ch }}</button>
+              <button class="chapter-btn" 
+                      value="{{ ch }}" 
+                      (click)="onClickChapter($event)"
+                      [ngClass]="{ 'active-chapter': selectedChapter() === ch.toString()}"
+              >
+                {{ ch }}
+              </button>
             }
           }
         </div>
@@ -74,7 +80,7 @@
   
   @if(showSearchContent()) {
     <div class="search-result my-4" (click)="$event.stopPropagation()">
-      <app-search-content [chapterData]="chapterData()"></app-search-content>
+      <app-search-content [chapterData]="chapterData()" [searchedBook]="selectedBookName" [chosenChapter]="selectedChapter()"></app-search-content>
     </div>
   }
 </div>

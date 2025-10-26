@@ -9,4 +9,6 @@ import { Component, input } from '@angular/core';
 })
 export class SearchContentComponent {
   chapterData = input<any[]>([]);
+  searchedBook = input<string>('');
+  chosenChapter = input<string>('');
 }
