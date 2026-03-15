@@ -20,6 +20,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import {
+  AvailableTranslations,
+  Translation,
+} from '../entities/available-translations';
+import {
+  TranslationBook,
+  TranslationBooks,
+} from '../entities/translation-books';
+import {
+  ChapterContent,
+  ChapterData,
+  TranslationBookChapter,
+} from '../entities/translation-book-chapter';
 
 @Component({
   selector: 'app-home',
@@ -40,10 +53,10 @@ export class HomeComponent implements OnInit {
   private apiService = inject(ApiService);
 
   isExpanded = signal<boolean>(false);
-  translationsData = signal<any[]>([]);
+  translationsData = signal<Translation[]>([]);
   booksData = signal<any[]>([]);
   numberOfChapters = signal<number[]>([]);
-  chapterData = signal<number[]>([]);
+  chapterData = signal<ChapterContent[]>([]);
 
   selectedTranslation = signal<string>('');
   selectedBook = signal<string>('');
@@ -122,11 +135,11 @@ export class HomeComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error(err);
-          return of([]);
+          return of({ translations: [] } as AvailableTranslations);
         })
       )
-      .subscribe((trans) => {
-        const englishTranslations = trans.translations.filter(
+      .subscribe((data: AvailableTranslations) => {
+        const englishTranslations = data.translations.filter(
           (t: any) => t.language === 'eng'
         );
         this.translationsData.set(englishTranslations);
@@ -148,12 +161,15 @@ export class HomeComponent implements OnInit {
         .pipe(
           catchError((err) => {
             console.error(err);
-            return of({ books: [] });
+            return of({
+              translation: {} as Translation,
+              books: [],
+            } as TranslationBooks);
           })
         )
-        .subscribe((bk) => {
-          this.booksData.set(bk.books ?? []);
-          if (bk.books?.length) {
+        .subscribe((data) => {
+          this.booksData.set(data.books ?? []);
+          if (data.books.length) {
             this.bibleForm.get('book')!.enable();
           }
         });
@@ -192,7 +208,22 @@ export class HomeComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error(err);
-          return of([]);
+          return of({
+            translation: {} as Translation,
+            book: {} as TranslationBook,
+            thisChapterLink: '',
+            thisChapterAudioLinks: {},
+            nextChapterApiLink: null,
+            nextChapterAudioLinks: null,
+            previousChapterApiLink: null,
+            previousChapterAudioLinks: null,
+            numberOfVerses: 0,
+            chapter: {
+              number: 0,
+              content: [],
+              footnotes: [],
+            },
+          } as TranslationBookChapter);
         })
       )
       .subscribe((chData) => {
